@@ -27,6 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,7 +45,7 @@ public class ForecastFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         //create ArrayList that will populate the listview
-        ArrayList<String> weekForecast = new ArrayList<String>();
+        List<String> weekForecast = new ArrayList<String>();
         weekForecast.add(0, "Today - Rainy - 57/64");
         weekForecast.add(1, "Tomorrow - Foggy - 54-60");
         weekForecast.add(2, "Friday - Cloudy - 55/65");
@@ -180,9 +181,12 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
+            //For log verification to be removed in final product.
+            /*
             for (String s : resultStrs) {
                 Log.v(LOG_TAG, "Forecast entry: " + s);
             }
+            */
             return resultStrs;
 
         }
@@ -234,8 +238,8 @@ public class ForecastFragment extends Fragment {
 
                 //Place the build URL string into URL variable for future use
                 URL url = new URL(builtUri.toString());
-                //Create a verbose (annotated by the "v" printing the built URL
-                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+                //Create a verbose (annotated by the "v" printing the built URL. To be removved in final code
+               // Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -265,7 +269,7 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
 
-                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
+                //Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
 
 
 
