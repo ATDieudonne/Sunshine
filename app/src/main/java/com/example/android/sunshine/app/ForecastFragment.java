@@ -71,9 +71,9 @@ public class ForecastFragment extends Fragment {
     }
 
 
-    abstract class FetchWeatherTask extends AsyncTask<Void,Void,Void>{
+    abstract class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
 
-        public final String LOG_TAG=FetchWeatherTask.class.getSimpleName();
+        public final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
         //Going to insert networking code snippet from Udacity's GitHub repo
 
         // These two need to be declared outside the try/catch
@@ -84,7 +84,7 @@ public class ForecastFragment extends Fragment {
         // Will contain the raw JSON response as a string.
         String forecastJsonStr = null;
 
-        protected String doInBackground(HttpURLConnection urlConnection, BufferedReader reader){
+        protected String doInBackground(HttpURLConnection urlConnection, BufferedReader reader) {
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
@@ -135,7 +135,7 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-        //End of Udacity Code
+            //End of Udacity Code
 
             return forecastJsonStr;
         }
