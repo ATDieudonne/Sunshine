@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,18 +84,9 @@ public class ForecastFragment extends Fragment {
         my_listview_forecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Super fast Toast
-                //Get the text from the listview using the getItem function of the mForecastAdapter.
-                //Note how you can access mForecastAdapter inside this override function.
-                //This means you only need the postion of the item in the listview which
-                //is passed into the function as int position
-                String forecastText = mForecastAdapter.getItem(position);
-                //Now invoke the toast constructor and show function in the same line
-                //'cause that's a thing
-                //Note that you can use getActivity() to call the current context required by the
-                //constructor as the first parameter
-                //As well as appending .show() to the end of the constructor
-                Toast.makeText(getActivity(),forecastText, Toast.LENGTH_SHORT).show();
+                //Create intent to open DetailActivity
+                Intent detailsIntent = new Intent(getActivity(),DetailActivity.class);
+                startActivity(detailsIntent);
             }
         });
 
