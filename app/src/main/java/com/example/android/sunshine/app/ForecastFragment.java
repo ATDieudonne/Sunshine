@@ -87,7 +87,7 @@ public class ForecastFragment extends Fragment {
                 //Super fast Toast
                 //Get the text from the listview using the getItem function of the mForecastAdapter.
                 //Note how you can access mForecastAdapter inside this override function.
-                //This means you only need the postion of the item in teh listview which
+                //This means you only need the postion of the item in the listview which
                 //is passed into the function as int position
                 String forecastText = mForecastAdapter.getItem(position);
                 //Now invoke the toast constructor and show function in the same line
