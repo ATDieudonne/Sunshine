@@ -16,6 +16,7 @@
 
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -74,6 +76,17 @@ public class DetailActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+            //Declare intent variable to copy passed Intent reference into
+            Intent passedIntent = getActivity().getIntent();
+            //Now create a String to put the passed forecast data into
+            String passedForcastData = passedIntent.getStringExtra(passedIntent.EXTRA_TEXT);
+            //Log.v("DetailActivity",passedForcastData);
+            TextView forecastTextView = new TextView(getContext());
+            forecastTextView.setTextSize(16);
+            forecastTextView.setText(passedForcastData);
+            container.addView(forecastTextView);
+
+
             return rootView;
         }
     }
