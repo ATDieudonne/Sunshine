@@ -56,7 +56,11 @@ public class DetailActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        //if the clicked menu item is the settings button launch the
+        //setting activity via an intent
         if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this,SettingsActivity.class);
+            startActivity(settingsIntent);
             return true;
         }
 
