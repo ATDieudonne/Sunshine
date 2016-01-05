@@ -5,4 +5,8 @@
     <string name="open_weather_map_app_id" translatable="false">c61efdd3ab7bffa80970c5c145abbb6b</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <!--Preference Strings -->
+    <string name="pref_location_label">Location</string>
+    <string name="pref_location_key" translatable ="false">location</string>
+    <string name="pref_location_default" translatable="false">10034</string>
 </resources>
