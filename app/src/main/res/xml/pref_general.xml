@@ -7,4 +7,11 @@
         android:inputType="text"
         android:singleLine="true"
         android:maxLength="30"/>
+
+    <ListPreference
+        android:title="@string/pref_units_label"
+        android:key="@string/pref_units_key"
+        android:defaultValue="@string/pref_units_default"
+        android:entryValues="@array/pref_unit_option_values"
+        android:entries="@array/pref_unit_options"/>
 </PreferenceScreen>

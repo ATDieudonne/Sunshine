@@ -50,15 +50,6 @@ public class ForecastFragment extends Fragment {
 
         //create ArrayList that will populate the listview
         List<String> weekForecast = new ArrayList<String>();
-        weekForecast.add(0, "Today - Rainy - 57/64");
-        weekForecast.add(1, "Tomorrow - Foggy - 54-60");
-        weekForecast.add(2, "Friday - Cloudy - 55/65");
-        weekForecast.add(3, "Saturday - Partly Cloudy - 59/67");
-        weekForecast.add(4, "Sunday - Sunny - 63/69");
-        weekForecast.add(5, "Monday - Sunny - 64/70");
-        weekForecast.add(6, "Tuesday - Sunny -63/70");
-        weekForecast.add(7, "Wednesday - Partly Cloudy - 60/66");
-        weekForecast.add(8, "Thursday - Cloudy -50/60");
 
         //Now that we have the data we can create the adapter that will convert the data into listviews
 
@@ -145,6 +136,23 @@ public class ForecastFragment extends Fragment {
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
+
+            //if unit preference is set to Imperial, convert temps to imperial
+
+            //To use the Unit type saved in the preferences you need to access the
+            //shared preferences that handles all preferences in a project.
+            //Create a SharedPreference object that you will initialise to teh default Shared
+            //Preferences file.
+            SharedPreferences unitPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+            //Create a string that will hold the string value that you can find using the
+            // getString function of the Shared preferences. Since that function requires 2 strings
+            //you have the use the general getString function to get the strings from the resource ID
+            String pref_unit = unitPref.getString(getString(R.string.pref_units_key),getString(R.string.pref_units_default));
+            if(pref_unit.equals("imperial")){
+                roundedHigh = (roundedHigh *(9/5)) +32;
+                roundedLow = (roundedLow *(9/5)) +32;
+            }
 
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;
