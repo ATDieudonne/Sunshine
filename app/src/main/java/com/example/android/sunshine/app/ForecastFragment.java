@@ -99,6 +99,28 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
+    //create method to perform update tasks
+    private void updateWeather(){
+        FetchWeatherTask weatherTask= new FetchWeatherTask();
+        //To use the zip saved in the preferences you need to access the
+        //shared preferences that handles all preferences in a project.
+        //Create a SharedPreference object that you will initialise to teh default Shared
+        //Preferences file.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        //Create a string that will hold the string value that you can find using the
+        // getString function of the Shared preferences. Since that function requires 2 strings
+        //you have the use the general getString function to get the strings from the resource ID
+        String pref_loc = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+        weatherTask.execute(pref_loc);
+    }
+
+    //Override onStart method to update the weather data
+    @Override
+    public void onStart(){
+        super.onStart();
+        updateWeather();
+    }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]>{
 
@@ -348,18 +370,8 @@ public class ForecastFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask= new FetchWeatherTask();
-            //To use the zip saved in the preferences you need to access the
-            //shared preferences that handles all preferences in a project.
-            //Create a SharedPreference object that you will initialise to teh default Shared
-            //Preferences file.
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-            //Create a string that will hold the string value that you can find using the
-            // getString function of the Shared preferences. Since that function requires 2 strings
-            //you have the use the general getString function to get the strings from the resource ID
-            String pref_loc = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
-            weatherTask.execute(pref_loc);
+            //run update weather function when refresh button is clicked
+            updateWeather();
             return true;
         }
 
