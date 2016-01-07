@@ -32,6 +32,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -104,6 +105,21 @@ public class ForecastFragment extends Fragment {
         //you have the use the general getString function to get the strings from the resource ID
         String pref_loc = prefs.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
         weatherTask.execute(pref_loc);
+    }
+
+    //Create method to show map of preferred location via intent
+    private void showPrefMap(String prefLocation){
+        //create the string that will be used to call the map API in the intent
+        //using the location string passed to the function
+        String uri = String.format(Locale.ENGLISH, "geo:0,0?q="+ prefLocation);
+        //Create the intent and pass the location string
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        //Use the resolveActivity function in a conditional to check is there is
+        //an app that can handle the Intent call and only start the Intent if
+        //there is one
+        if (mapIntent.resolveActivity(getContext().getPackageManager()) != null){
+        startActivity(mapIntent);
+        }
     }
 
     //Override onStart method to update the weather data
@@ -381,6 +397,11 @@ public class ForecastFragment extends Fragment {
             //run update weather function when refresh button is clicked
             updateWeather();
             return true;
+        }
+        if (id == R.id.map_view_content){
+            SharedPreferences mapPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String pref_map = mapPref.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+            showPrefMap(pref_map);
         }
 
         return super.onOptionsItemSelected(item);

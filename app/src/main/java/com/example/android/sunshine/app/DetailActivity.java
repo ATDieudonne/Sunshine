@@ -19,13 +19,18 @@ package com.example.android.sunshine.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -40,13 +45,14 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -72,7 +78,29 @@ public class DetailActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
+        private String mForecastStr;
+
+        private ShareActionProvider mShareActionProvider;
+
         public PlaceholderFragment() {
+            setHasOptionsMenu(true);
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            inflater.inflate(R.menu.detailfragment, menu);
+
+            //Find the MenuItem with the ShareAction provider
+            MenuItem mItem = menu.findItem(R.id.action_share);
+
+            //Fetch and store ShareActionProvider
+            mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(mItem);
+
+            if(mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(createShareForecastIntent());
+            }
         }
 
         @Override
@@ -83,15 +111,26 @@ public class DetailActivity extends ActionBarActivity {
             //Declare intent variable to copy passed Intent reference into
             Intent passedIntent = getActivity().getIntent();
             //Now create a String to put the passed forecast data into
-            String passedForcastData = passedIntent.getStringExtra(passedIntent.EXTRA_TEXT);
+            String passedForecastData = passedIntent.getStringExtra(passedIntent.EXTRA_TEXT);
             //Log.v("DetailActivity",passedForcastData);
             TextView forecastTextView = new TextView(getContext());
             forecastTextView.setTextSize(16);
-            forecastTextView.setText(passedForcastData);
+            forecastTextView.setText(passedForecastData);
             container.addView(forecastTextView);
 
+            mForecastStr = passedForecastData;
 
             return rootView;
         }
+
+        //setIntent
+        private Intent createShareForecastIntent(){
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mForecastStr + FORECAST_SHARE_HASHTAG);
+            return shareIntent;
+        }
+
     }
 }
